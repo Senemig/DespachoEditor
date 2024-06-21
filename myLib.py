@@ -1,6 +1,5 @@
 from docx import Document
-import docxedit, requests, locale
-
+import docxedit, requests, locale, datetime
 
 def numberToText(number):
     api_num = (
@@ -15,7 +14,7 @@ def numberToText(number):
         return response.json()["text"]
 
 
-def editarDespacho(cnpj, obj, val, folder):
+def editarDespacho(dispensa, cnpj, val, folder):
 
     locale.setlocale(locale.LC_ALL, "")
 
@@ -35,6 +34,10 @@ def editarDespacho(cnpj, obj, val, folder):
         dados = response.json()
         print(dados)
 
+        # Data de hoje
+        data = datetime.datetime.now()
+        data = data.strftime('%d') +  " de " + data.strftime('%B').capitalize() + " de " + data.strftime('%Y')
+
         # Formatar CNPJ
         cnpjFormat = "%s.%s.%s/%s-%s" % (
             cnpj[0:2],
@@ -53,6 +56,12 @@ def editarDespacho(cnpj, obj, val, folder):
         document = Document("despacho.docx")
 
         # Alterar campos com as novas informações
+        # 1 - EMPRESA
+        # 2 - CNPJ
+        # 3 - VALOR
+        # 4 - VALOR POR EXTENSO
+        # 5 - DATA
+        # 6 - DISPENSA
 
         # Razão social
         docxedit.replace_string(
@@ -64,18 +73,22 @@ def editarDespacho(cnpj, obj, val, folder):
         # CNPJ formatado
         docxedit.replace_string(document, old_string="#2", new_string=cnpjFormat)
 
-        # Objeto a ser adquirido
-        docxedit.replace_string(document, old_string="#3", new_string=obj.upper())
+        # Número da dispensa
+        docxedit.replace_string(document, old_string="#6", new_string=dispensa + "/2024")
 
         # Valor da compra
         docxedit.replace_string(
             document,
-            old_string="#4",
+            old_string="#3",
             new_string=val,
         )
 
         # Valor por extenso
-        docxedit.replace_string(document, old_string="#5", new_string=numExtenso)
+        docxedit.replace_string(document, old_string="#4", new_string=numExtenso)
+
+        # Data de hoje
+        docxedit.replace_string(document, old_string="#5", new_string=data)        
 
         # Salvar novo documento com as informações alteradas
+        print('Salvando o documento')
         document.save(folder + "/despacho2.docx")

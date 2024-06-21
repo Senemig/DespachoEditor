@@ -4,14 +4,15 @@ import myLib
 # All the stuff inside your window.
 layout = [
     [
-        sg.Text("CNPJ da empresa"),
-        sg.InputText(key="cnpj", default_text="57722118000140"),
+        sg.Text("Dispensa"),
+        sg.InputText(key="dispensa", default_text=""),
+        sg.Text('/2024')
     ],
     [
-        sg.Text("Objeto da contratação"),
-        sg.InputText(key="obj", default_text="Alguma coisa muito cara"),
+        sg.Text("CNPJ da empresa"),
+        sg.InputText(key="cnpj", default_text=""),
     ],
-    [sg.Text("Valor da AF"), sg.InputText(key="val", default_text="1764,55")],
+    [sg.Text("Valor da AF"), sg.InputText(key="val", default_text="")],
     [sg.Button("Ok"), sg.Button("Cancel")],
 ]
 
@@ -28,9 +29,9 @@ while True:
     elif event == "Ok":
         if values["cnpj"] == "" or len(values["cnpj"]) != 14:
             sg.popup("CNPJ inválido!", title="Erro", any_key_closes=True)
-        elif values["obj"] == "":
+        elif values["dispensa"] == "":
             sg.popup(
-                "Preencha o campo 'Objeto da contratação'!",
+                "Preencha o campo 'Dispensa'!",
                 title="Erro",
                 any_key_closes=True,
             )
@@ -58,11 +59,11 @@ while True:
                     )
                     if folder != "":
                         myLib.editarDespacho(
-                            values["cnpj"], values["obj"], values["val"], folder
+                            values["dispensa"], values["cnpj"], values["val"], folder
                         )
                         sg.popup("Despacho salvo com sucesso!", title="😀")
                         window["cnpj"].update("")
-                        window["obj"].update("")
+                        window["dispensa"].update("")
                         window["val"].update("")
 
 window.close()
