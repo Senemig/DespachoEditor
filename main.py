@@ -13,7 +13,8 @@ layout = [
         sg.InputText(key="cnpj", default_text=""),
     ],
     [sg.Text("Valor da AF"), sg.InputText(key="val", default_text="")],
-    [sg.Button("Ok"), sg.Button("Cancel")],
+    [sg.Button("Ok"), sg.Button("Cancel"), sg.Button('Teste', visible=False)],
+    [sg.StatusBar('Pronto', text_color='#8fce00', key="-STAT-")],
 ]
 
 # Create the Window
@@ -58,12 +59,16 @@ while True:
                         default_path="",
                     )
                     if folder != "":
+                        window['-STAT-'].update('Trabalhando', text_color='#ffd966')
                         myLib.editarDespacho(
                             values["dispensa"], values["cnpj"], values["val"], folder
                         )
+                        window['-STAT-'].update('Pronto', text_color='#8fce00')
                         sg.popup("Despacho salvo com sucesso!", title="😀")
                         window["cnpj"].update("")
                         window["dispensa"].update("")
                         window["val"].update("")
+    elif event == 'Teste': #AÇÕES DO BOTÃO DE TESTE
+        window['-STAT-'].update('Trabalhando', text_color='#ffd966')
 
 window.close()
