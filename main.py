@@ -69,6 +69,13 @@ while True:
                         window["dispensa"].update("")
                         window["val"].update("")
     elif event == 'Teste': #AÇÕES DO BOTÃO DE TESTE
-        window['-STAT-'].update('Trabalhando', text_color='#ffd966')
+        # window['-STAT-'].update('Trabalhando', text_color='#ffd966')
+        numExtenso = myLib.numberToText(values["val"].replace(",", "."))
+        val = values['val']
+        if val.isnumeric():
+            val = "{:n}".format(float(val.replace(",", "."))) + ",00"
+        else:
+            val = "{:.2f}".format(float(val.replace(",", ".")))
+        sg.popup(val + ' - ' + numExtenso, title='Teste')
 
 window.close()

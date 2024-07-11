@@ -50,7 +50,7 @@ def editarDespacho(dispensa, cnpj, val, folder):
         if val.isnumeric():
             val = "{:n}".format(float(val.replace(",", "."))) + ",00"
         else:
-            val = "{:n}".format(float(val.replace(",", ".")))
+            val = "{:.2f}".format(float(val.replace(",", ".")))
 
         # Abrir documento modelo
         document = Document("despacho.docx")
