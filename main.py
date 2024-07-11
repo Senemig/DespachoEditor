@@ -50,6 +50,7 @@ while True:
                     any_key_closes=True,
                 )
             else:
+                window['-STAT-'].update('Trabalhando', text_color='#ffd966')
                 folder = ""
                 while folder == "":
                     print(folder)
@@ -59,7 +60,6 @@ while True:
                         default_path="",
                     )
                     if folder != "":
-                        window['-STAT-'].update('Trabalhando', text_color='#ffd966')
                         myLib.editarDespacho(
                             values["dispensa"], values["cnpj"], values["val"], folder
                         )
