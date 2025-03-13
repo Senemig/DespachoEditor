@@ -74,7 +74,7 @@ def editarDespacho(dispensa, cnpj, val, folder):
         docxedit.replace_string(document, old_string="#2", new_string=cnpjFormat)
 
         # Número da dispensa
-        docxedit.replace_string(document, old_string="#6", new_string=dispensa + "/2024")
+        docxedit.replace_string(document, old_string="#6", new_string=dispensa + "/" + str(datetime.date.today().year))
 
         # Valor da compra
         docxedit.replace_string(

@@ -1,12 +1,12 @@
 import PySimpleGUI as sg
-import myLib
+import myLib, datetime
 
 # All the stuff inside your window.
 layout = [
     [
         sg.Text("Dispensa"),
         sg.InputText(key="dispensa", default_text=""),
-        sg.Text('/2024')
+        sg.Text('/' + str(datetime.date.today().year))
     ],
     [
         sg.Text("CNPJ da empresa"),
