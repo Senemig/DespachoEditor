@@ -48,9 +48,11 @@ def editarDespacho(dispensa, cnpj, val, folder):
         )
         numExtenso = numberToText(val.replace(",", "."))
         if val.isnumeric():
-            val = "{:n}".format(float(val.replace(",", "."))) + ",00"
+            val = "{:,.2f}".format(float(val.replace(",", "."))).split(".")[0]
+            val = val.replace(",", ".") + ",00"
         else:
-            val = "{:.2f}".format(float(val.replace(",", ".")))
+            val1, val2 = "{:,.2f}".format(float(val.replace(",", "."))).split(".")
+            val = val1.replace(",", ".") + "," + val2
 
         # Abrir documento modelo
         document = Document("despacho.docx")

@@ -13,7 +13,7 @@ layout = [
         sg.InputText(key="cnpj", default_text=""),
     ],
     [sg.Text("Valor da AF"), sg.InputText(key="val", default_text="")],
-    [sg.Button("Ok"), sg.Button("Cancel"), sg.Button('Teste', visible=False)],
+    [sg.Button("Ok"), sg.Button("Cancel"), sg.Button('Teste', visible=True)],
     [sg.StatusBar('Pronto', text_color='#8fce00', key="-STAT-")],
 ]
 
@@ -73,9 +73,11 @@ while True:
         numExtenso = myLib.numberToText(values["val"].replace(",", "."))
         val = values['val']
         if val.isnumeric():
-            val = "{:n}".format(float(val.replace(",", "."))) + ",00"
+            val = "{:,.2f}".format(float(val.replace(",", "."))).split('.')[0]
+            val = val.replace(",", ".") + ",00"
         else:
-            val = "{:.2f}".format(float(val.replace(",", ".")))
-        sg.popup(val + ' - ' + numExtenso, title='Teste')
+            val1, val2 = "{:,.2f}".format(float(val.replace(",", "."))).split('.')
+            val = val1.replace(',', '.') + ',' + val2
+        sg.popup(val + ' - ' + numExtenso, title='Teste')   
 
 window.close()
